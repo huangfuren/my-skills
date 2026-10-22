@@ -224,6 +224,7 @@ ctx.inject(['systemPrompt'], (inner) => {
 
 配套 skill：跨版本探测与基线降级见 `dsh-harness-compat-gate`（同样以 fail open 为第一原则）；
 宿主侧按需路由见 `dsh-plugin-fetch-route`；控件落位与插槽契约见 `dsh-client-slot-placement`；
-会话标签页见 `dsh-conversation-view-tab`；设置页入口见 `dsh-settings-page`。
+会话标签页见 `dsh-conversation-view-tab`；设置页入口见 `dsh-settings-page`；
+插件自己跑多步循环时的终止态、预算与收尾纪律见 `dsh-agent-loop-discipline`。
 
 总览与索引见 `dsh-plugin-dev-guide`。

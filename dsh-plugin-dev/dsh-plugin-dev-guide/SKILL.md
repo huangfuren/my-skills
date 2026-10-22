@@ -20,13 +20,14 @@ compatibility: >-
 
 ## 库地图
 
-九篇正文 + 一篇导航，按「你正在问什么」分成四组：
+十篇正文 + 一篇导航，按「你正在问什么」分成五组：
 
 | 组 | 回答的问题 | 篇目 |
 |---|---|---|
 | **骨架** | 怎么从零建起来、怎么打包 | `dsh-plugin-dual-half-skeleton` |
 | **数据通道** | 数据从哪来、怎么送到界面 | `dsh-session-projection`（投影值流）· `dsh-plugin-fetch-route`（按需路由）· `dsh-multi-source-config`（多实例 + 每源凭据） |
 | **界面落位** | 控件放哪、怎么进设置页 | `dsh-client-slot-placement` · `dsh-conversation-view-tab` · `dsh-settings-page` |
+| **执行循环** | 自己跑多步循环、怎么收得住 | `dsh-agent-loop-discipline` |
 | **生存与互操作** | 换宿主版本怎么办、和别人怎么不打架 | `dsh-harness-compat-gate` · `dsh-plugin-robust-mount` |
 
 ## 任务 → 该读哪篇
@@ -52,6 +53,11 @@ compatibility: >-
 | 要声明「我支持哪些宿主版本」 | `dsh-harness-compat-gate`（+ `references/support-matrix.md`） |
 | 插槽在某个宿主世代不存在 | `dsh-settings-page`（候选槽降级适配器） |
 | 升级后插件起不来（陈旧配置值） | `dsh-settings-page`（`.loose()`） |
+| 插件自己起多步循环，AI 说完成但机器上没生效 | `dsh-agent-loop-discipline` |
+| 步数用完了却报「已完成」 | `dsh-agent-loop-discipline`（终止语义与优先级） |
+| 执行结果不明（超时 / 断连，没拿到退出码） | `dsh-agent-loop-discipline`（未知优先规则） |
+| AI 越跑越偏，忘了最初要干什么 | `dsh-agent-loop-discipline`（+ `references/budget-and-context.md`） |
+| 循环里 AI 把终端回显当成机器返回的信息 | `dsh-agent-loop-discipline`（上下文两种来源分开） |
 
 ## 从零到上线的阅读顺序
 
@@ -63,8 +69,10 @@ compatibility: >-
 4. **配置** → `dsh-settings-page`（含 volatile 双轨）→ 多实例用 `dsh-multi-source-config`
 5. **收口** → `dsh-harness-compat-gate`（探测 + 门控 + 支持矩阵）
    + `dsh-plugin-robust-mount`（可选依赖、单活、副作用）
+6. **若插件自己跑 agent 循环** → `dsh-agent-loop-discipline`：
+   先定四个终态与优先级，再谈预算和上下文
 
-第 1、2 步是地基 —— 缺任何一个，后面几步都用不上。
+第 1、2 步是地基 —— 缺任何一个，后面几步都用不上。第 6 步只在循环归你管时才需要。
 
 ## 真相来源（按权威性排序）
 
