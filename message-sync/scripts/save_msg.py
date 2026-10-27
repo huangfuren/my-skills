@@ -33,8 +33,8 @@ INVALID_FS = set('\\/:*?"<>|')
 def _default_desktop() -> str:
     """探测真实桌面目录。
 
-    Windows 上桌面经常被重定向到非系统盘，而 ~/Desktop 展开成
-    C:\\Users\\<user>\\Desktop 并不存在，直接写会失败。
+    Windows 上桌面经常被重定向到非系统盘，而 `~/Desktop` 展开成
+    用户主目录下的 Desktop 并不存在，直接写会失败。
     优先级：注册表登记值 > 常见候选 > 用户主目录。
     """
     cands = []

@@ -210,7 +210,8 @@ python3 "$SKILL/scripts/privacy_scan.py" .          # 扫当前目录
 python3 "$SKILL/scripts/privacy_scan.py" . --strict # 有命中即非零退出，可接 CI
 ```
 
-扫描规则：内网 IP、绝对路径（`/Users/*`、`C:\Users\*`）、邮箱、手机号、
+扫描规则：内网 IP、**带用户名的绝对路径**（macOS / Linux 的 `/Users/`、`/home/` 前缀，
+以及 Windows 盘符下的用户目录）、邮箱、手机号、
 `@` 中文姓名、以及 `references/privacy-rules.txt` 里的自定义敏感词（一行一个，`#` 开头为注释）。
 
 ---
