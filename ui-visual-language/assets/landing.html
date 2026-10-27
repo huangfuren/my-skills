@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#5063d6">
+<meta name="description" content="企业级前端视觉语言基准页：低饱和冷灰蓝、中文大行高、单一强调色、自定义缓动。">
+<title>视觉基准页 · 企业级前端</title>
+<style>
+:root{
+  --primary:#5063d6; --primary-hover:#4054bd; --primary-plain:#6579ee;
+  --soft:#edf1ff; --ink:#273451; --muted:#5a6880; --paper:#f5f7fc;
+  --line:#e6eaf3; --white:#fff;
+  --shadow-card:0 16px 48px rgba(52,75,128,.063);
+  --shadow-raised:0 24px 70px rgba(83,107,179,.11),0 3px 12px rgba(83,107,179,.04);
+  --shadow-btn:0 5px 14px rgba(101,121,238,.145);
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --r-sm:8px; --r-md:10px; --r-lg:14px; --r-pill:24px;
+  --shell:min(1280px,calc(100% - 64px)); --header-h:76px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0; min-width:320px; background:var(--paper); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:14px; line-height:1.7; -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+:where(a,button):focus-visible{outline:2px solid var(--primary-plain);outline-offset:2px}
+.shell{width:var(--shell);margin-inline:auto}
+
+/* ---- header ---- */
+.site-header{
+  position:sticky; top:0; z-index:100; height:var(--header-h);
+  border-bottom:1px solid var(--line); background:rgba(255,255,255,.93);
+  -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px);
+  transition:transform .32s var(--ease-out),opacity .24s ease;
+}
+.site-header[data-hidden="true"]{transform:translateY(-100%);opacity:0}
+.header-inner{height:100%;display:flex;align-items:center;gap:32px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-size:18px;letter-spacing:-.02em}
+.brand-mark{width:28px;height:28px;border-radius:8px;background:var(--primary);display:grid;place-items:center;color:#fff;font-size:14px;font-weight:700}
+.nav{display:flex;gap:2px;margin-left:8px}
+.nav a{display:inline-flex;align-items:center;min-height:40px;padding:8px 16px;border-radius:var(--r-md);color:#4a5875;font-size:15px;transition:background .18s,color .18s}
+.nav a:hover{color:var(--primary)}
+.nav a[aria-current="page"]{background:var(--soft);color:var(--primary);font-weight:500}
+.header-actions{margin-left:auto;display:flex;align-items:center;gap:12px}
+.search-trigger{display:flex;align-items:center;gap:9px;width:216px;min-height:40px;padding:8px 12px;border:1px solid #e7ebf5;border-radius:9px;background:#f5f7fc;color:#8995ae;font-size:12px;text-align:left;transition:background .18s,border-color .18s,color .18s}
+.search-trigger:hover{border-color:#c5d0f6;background:#eff3ff;color:#667bd5}
+.search-trigger kbd{margin-left:auto;padding:1px 4px;border:1px solid #e3e8f2;border-radius:4px;background:#fff;font-size:10px;font-family:inherit}
+.login-link{min-height:40px;padding:8px 12px;color:#4a5875;font-size:14px}
+.login-link:hover{color:var(--primary)}
+
+/* ---- buttons ---- */
+.site-button{display:inline-flex;align-items:center;justify-content:center;gap:16px;min-height:48px;padding:10px 24px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--white);color:var(--ink);font-size:14px;font-weight:500;white-space:nowrap;transition:background .18s,box-shadow .18s,border-color .18s,color .18s}
+.site-button:hover{border-color:#cfd8ec}
+.site-button--primary{border-color:transparent;background:var(--primary);color:#fff;box-shadow:var(--shadow-btn)}
+.site-button--primary:hover{background:var(--primary-hover);box-shadow:0 7px 18px rgba(101,121,238,.196)}
+.site-button--small{min-height:42px;padding:8px 18px}
+.text-link{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:#596da2;font-size:14px;font-weight:500;transition:color .18s}
+.text-link:hover{color:var(--primary)}
+
+/* ---- hero ---- */
+.home-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:linear-gradient(120deg,#f2f6ff,#f6f5ff 60%,#edf5ff)}
+.home-hero__glow{position:absolute;width:600px;height:600px;right:-140px;top:-160px;border:80px solid rgba(227,232,255,.25);border-radius:50%}
+.home-hero__inner{position:relative;display:grid;gap:44px;padding-block:64px 40px;text-align:center;justify-items:center}
+.hero-copy{max-width:900px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;margin:0;padding:7px 12px;border:1px solid #dfe7ff;border-radius:var(--r-pill);background:rgba(255,255,255,.7);color:#5e72b4;font-size:12px;font-weight:500;letter-spacing:.02em}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--primary)}
+.home-hero h1{margin:24px 0;font-size:clamp(38px,4vw,58px);line-height:1.38;letter-spacing:-.035em;font-weight:700}
+.home-hero h1 em{color:var(--primary);font-style:normal}
+.hero-lead{max-width:660px;margin:0 auto;color:var(--muted);font-size:16px;line-height:1.95}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:32px;flex-wrap:wrap}
+.hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:32px;color:#66758e;font-size:12px}
+.hero-meta span{display:inline-flex;align-items:center;gap:8px}
+.hero-meta i{font-style:normal;color:#7f91d2}
+.hero-meta span::before{content:"";width:4px;height:4px;border-radius:50%;background:#bec9e8}
+
+/* ---- product showcase ---- */
+.hero-visual{width:100%;max-width:1120px;justify-self:center}
+.product-showcase{margin:0;overflow:hidden;border:1px solid #dce3f4;border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow-raised);text-align:left}
+.showcase-bar{height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px;border-bottom:1px solid #e6ebf6;background:#fcfdff;color:#7f8ba4;font-size:10px}
+.showcase-dots{display:flex;gap:6px;min-width:90px}
+.showcase-dots i{width:7px;height:7px;border-radius:100%}
+.showcase-dots i:nth-child(1){background:#edc7c7}
+.showcase-dots i:nth-child(2){background:#efdfb8}
+.showcase-dots i:nth-child(3){background:#bcdccd}
+.showcase-live{display:flex;align-items:center;justify-content:flex-end;gap:6px;min-width:90px}
+.showcase-live i{width:5px;height:5px;border-radius:50%;background:#65b098}
+.showcase-image{display:block;width:100%;padding:0;border:0;background:#f6f7fc;position:relative}
+.showcase-image svg{display:block;width:100%;height:auto}
+.showcase-image>span{position:absolute;right:16px;bottom:16px;padding:6px 12px;border:1px solid #e4e9f4;border-radius:6px;background:#fffefa;color:#6174c9;font-size:12px;opacity:0;transition:opacity .2s}
+.showcase-image:hover>span,.showcase-image:focus-visible>span{opacity:1}
+.product-showcase figcaption{display:flex;justify-content:space-between;gap:16px;padding:13px 18px;border-top:1px solid #e6ebf6;color:#6f7d98;font-size:11px}
+.product-showcase figcaption span:last-child{color:#98a2b7}
+.showcase-dialog{width:1300px;max-width:calc(100vw - 40px);max-height:90dvh;padding:16px;border:1px solid #dce3f4;border-radius:var(--r-lg);background:#f7f9ff}
+.showcase-dialog::backdrop{background:rgba(26,36,77,.79);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+.showcase-dialog>button{display:block;margin:0 0 16px auto;padding:8px 16px;border:1px solid #dfe4ef;border-radius:var(--r-sm);background:#fff;color:#566589;font-size:13px}
+
+/* ---- sections ---- */
+.section{padding:64px 0}
+.section--white{background:#fff;border-block:1px solid var(--line)}
+.section-header{display:grid;grid-template-columns:.6fr 1.2fr 1fr;align-items:end;gap:40px;margin-bottom:36px}
+.section-header h2{margin:12px 0 0;font-size:clamp(28px,3vw,40px);line-height:1.5;letter-spacing:-.025em;font-weight:700}
+.section-header>p{margin:0;color:var(--muted);font-size:15px;line-height:1.9}
+.section-eyebrow{margin:0;color:#7f91d2;font-size:12px;letter-spacing:.1em}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.card{padding:24px;border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow-card);transition:box-shadow .24s var(--ease-out),transform .24s var(--ease-out)}
+.card:hover{box-shadow:0 20px 54px rgba(52,75,128,.09);transform:translateY(-4px)}
+.card-icon{width:36px;height:36px;border-radius:var(--r-md);background:var(--soft);display:grid;place-items:center;color:var(--primary)}
+.card h3{margin:18px 0 8px;font-size:18px;line-height:1.45;letter-spacing:-.02em;font-weight:600}
+.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.9}
+
+/* ---- cta ---- */
+.cta{padding:80px 0}
+.cta-inner{display:grid;justify-items:center;gap:8px;padding:56px 32px;border:1px solid #dfe7f8;border-radius:18px;background:linear-gradient(120deg,#eff4ff,#f6f5ff 65%,#fafdff);text-align:center}
+.cta h2{margin:12px 0 0;font-size:clamp(28px,3vw,40px);line-height:1.5;letter-spacing:-.025em}
+.cta p{max-width:560px;margin:8px 0 0;color:var(--muted);font-size:15px;line-height:1.9}
+.cta .hero-actions{margin-top:28px}
+
+/* ---- footer ---- */
+.site-footer{padding:64px 0 40px;border-top:1px solid var(--line);background:#fff}
+.footer-grid{display:grid;grid-template-columns:minmax(240px,1.4fr) 3fr;gap:64px}
+.footer-brand p{max-width:340px;margin:20px 0 0;color:var(--muted);font-size:14px;line-height:1.9}
+.footer-links{display:grid;grid-template-columns:repeat(3,minmax(100px,1fr));gap:64px}
+.footer-links div{display:grid;align-content:start;gap:12px}
+.footer-links strong{margin-bottom:5px;font-size:14px;font-weight:500}
+.footer-links a{color:var(--muted);font-size:13px;transition:color .18s}
+.footer-links a:hover{color:var(--primary)}
+.footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:#8995ae;font-size:12px}
+
+/* ---- responsive ---- */
+@media (max-width:1080px){:root{--shell:calc(100% - 40px)} .nav{display:none} .search-trigger{display:none}}
+@media (max-width:900px){
+  .section-header{grid-template-columns:1fr 1.5fr;gap:24px}
+  .section-header>p{grid-column:1/-1}
+  .grid-3{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr;gap:40px}
+  .footer-links{gap:32px}
+}
+@media (max-width:760px){
+  :root{--shell:calc(100% - 32px);--header-h:68px}
+  .home-hero__inner{padding-block:48px 32px;gap:32px}
+  .home-hero h1{font-size:34px;letter-spacing:-.03em}
+  .hero-copy{max-width:100%}
+  .section-header{grid-template-columns:1fr;gap:12px;margin-bottom:28px}
+  .header-actions .login-link{display:none}
+  .hero-actions{gap:16px}
+}
+@media (max-width:540px){
+  .home-hero h1{font-size:29px;line-height:1.45}
+  .hero-lead{font-size:15px;line-height:1.9}
+  .site-button{width:100%}
+  .hero-actions{width:100%}
+  .showcase-bar span:nth-child(2){display:none}
+  .footer-links{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header" data-hidden="false">
+  <div class="shell header-inner">
+    <a class="brand" href="#"><span class="brand-mark">D</span>Deploy</a>
+    <nav class="nav">
+      <a href="#" aria-current="page">首页</a>
+      <a href="#capability">产品</a>
+      <a href="#capability">文档</a>
+      <a href="#capability">关于</a>
+    </nav>
+    <div class="header-actions">
+      <button class="search-trigger" type="button">搜索文档、文章 <kbd>/</kbd></button>
+      <a class="login-link" href="#">登录</a>
+      <a class="site-button site-button--primary site-button--small" href="#">注册账号</a>
+    </div>
+  </div>
+</header>
+
+<section class="home-hero">
+  <div class="home-hero__glow" aria-hidden="true"></div>
+  <div class="shell home-hero__inner">
+    <div class="hero-copy">
+      <p class="eyebrow">为自建基础设施而设计</p>
+      <h1>让部署、运维与<br><em>安全管理</em>集中在一个平台</h1>
+      <p class="hero-lead">统一资产、自动化发布、远程运维与审计，帮助技术团队更快、更稳、更安全地交付应用。</p>
+      <div class="hero-actions">
+        <a class="site-button site-button--primary" href="#">注册账号，开始使用 →</a>
+        <a class="site-button" href="#">获取 Deploy ↓</a>
+        <a class="text-link" href="#">阅读文档 ↗</a>
+      </div>
+      <div class="hero-meta">
+        <span><i>01</i>Server + K8s</span>
+        <span><i>02</i>Playbook + Pipeline</span>
+        <span><i>03</i>RBAC + Audit</span>
+      </div>
+    </div>
+
+    <!-- 产品截图框：上线前把整张 svg 换成 <img src="真实截图.png" width="1600" height="632" alt="..."> -->
+    <div class="hero-visual">
+      <figure class="product-showcase">
+        <div class="showcase-bar">
+          <span class="showcase-dots"><i></i><i></i><i></i></span>
+          <span>Deploy / 统一工作台</span>
+          <span class="showcase-live"><i></i>产品实景</span>
+        </div>
+        <button class="showcase-image" type="button" id="open-preview" aria-label="查看大图">
+          <svg viewBox="0 0 1600 632" width="1600" height="632" role="img" aria-label="统一工作台示意">
+            <rect width="1600" height="632" fill="#f7f9fe"/>
+            <rect width="220" height="632" fill="#ffffff"/>
+            <rect x="219" width="1" height="632" fill="#e6eaf3"/>
+            <rect x="24" y="26" width="22" height="22" rx="6" fill="#5063d6"/>
+            <rect x="56" y="31" width="76" height="12" rx="6" fill="#273451" opacity=".82"/>
+            <rect x="24" y="88" width="172" height="34" rx="8" fill="#edf1ff"/>
+            <rect x="38" y="99" width="92" height="12" rx="6" fill="#5063d6" opacity=".75"/>
+            <rect x="24" y="132" width="172" height="34" rx="8" fill="#f5f7fc"/>
+            <rect x="38" y="143" width="110" height="12" rx="6" fill="#aab4c9"/>
+            <rect x="24" y="176" width="172" height="34" rx="8" fill="#f5f7fc"/>
+            <rect x="38" y="187" width="84" height="12" rx="6" fill="#aab4c9"/>
+            <rect x="24" y="220" width="172" height="34" rx="8" fill="#f5f7fc"/>
+            <rect x="38" y="231" width="102" height="12" rx="6" fill="#aab4c9"/>
+            <rect x="24" y="264" width="172" height="34" rx="8" fill="#f5f7fc"/>
+            <rect x="38" y="275" width="70" height="12" rx="6" fill="#aab4c9"/>
+            <rect x="24" y="560" width="172" height="44" rx="10" fill="#f5f7fc"/>
+            <circle cx="46" cy="582" r="9" fill="#d5dcf0"/>
+            <rect x="64" y="576" width="72" height="11" rx="5" fill="#aab4c9"/>
+            <rect x="221" y="0" width="1379" height="64" fill="#ffffff"/>
+            <rect x="221" y="63" width="1379" height="1" fill="#e6eaf3"/>
+            <rect x="252" y="26" width="140" height="13" rx="6" fill="#273451" opacity=".8"/>
+            <rect x="1300" y="20" width="90" height="26" rx="8" fill="#edf1ff"/>
+            <rect x="1410" y="20" width="160" height="26" rx="8" fill="#f5f7fc"/>
+            <g fill="#ffffff">
+              <rect x="252" y="96" width="300" height="104" rx="14"/>
+              <rect x="584" y="96" width="300" height="104" rx="14"/>
+              <rect x="916" y="96" width="300" height="104" rx="14"/>
+              <rect x="1248" y="96" width="300" height="104" rx="14"/>
+            </g>
+            <g fill="#e6eaf3">
+              <rect x="252.5" y="96.5" width="299" height="103" rx="14" fill="none" stroke="#e6eaf3"/>
+              <rect x="584.5" y="96.5" width="299" height="103" rx="14" fill="none" stroke="#e6eaf3"/>
+              <rect x="916.5" y="96.5" width="299" height="103" rx="14" fill="none" stroke="#e6eaf3"/>
+              <rect x="1248.5" y="96.5" width="299" height="103" rx="14" fill="none" stroke="#e6eaf3"/>
+            </g>
+            <g fill="#8a97ac" font-size="15" font-family="system-ui,sans-serif">
+              <text x="276" y="132">执行总量</text>
+              <text x="608" y="132">近期成功率</text>
+              <text x="940" y="132">活动任务</text>
+              <text x="1272" y="132">失败任务</text>
+            </g>
+            <g font-size="30" font-weight="600" font-family="system-ui,sans-serif">
+              <text x="276" y="176" fill="#273451">1,284</text>
+              <text x="608" y="176" fill="#2f9e7e">99.2%</text>
+              <text x="940" y="176" fill="#273451">12</text>
+              <text x="1272" y="176" fill="#d4694a">3</text>
+            </g>
+            <rect x="252" y="228" width="940" height="336" rx="14" fill="#ffffff" stroke="#e6eaf3"/>
+            <rect x="280" y="256" width="120" height="12" rx="6" fill="#aab4c9"/>
+            <g fill="#dfe6f8">
+              <rect x="292" y="400" width="46" height="132" rx="6"/>
+              <rect x="362" y="352" width="46" height="180" rx="6"/>
+              <rect x="432" y="424" width="46" height="108" rx="6"/>
+              <rect x="502" y="320" width="46" height="212" rx="6"/>
+              <rect x="572" y="384" width="46" height="148" rx="6"/>
+              <rect x="642" y="300" width="46" height="232" rx="6"/>
+              <rect x="712" y="368" width="46" height="164" rx="6"/>
+              <rect x="782" y="336" width="46" height="196" rx="6"/>
+              <rect x="852" y="408" width="46" height="124" rx="6"/>
+              <rect x="922" y="356" width="46" height="176" rx="6"/>
+              <rect x="992" y="392" width="46" height="140" rx="6"/>
+              <rect x="1062" y="312" width="46" height="220" rx="6"/>
+            </g>
+            <g fill="#5063d6" opacity=".85">
+              <rect x="642" y="300" width="46" height="10" rx="5"/>
+              <rect x="1062" y="312" width="46" height="10" rx="5"/>
+            </g>
+            <rect x="1216" y="228" width="332" height="336" rx="14" fill="#ffffff" stroke="#e6eaf3"/>
+            <rect x="1244" y="256" width="96" height="12" rx="6" fill="#aab4c9"/>
+            <g>
+              <rect x="1244" y="296" width="276" height="52" rx="10" fill="#f7f9fe"/>
+              <rect x="1244" y="360" width="276" height="52" rx="10" fill="#f7f9fe"/>
+              <rect x="1244" y="424" width="276" height="52" rx="10" fill="#f7f9fe"/>
+              <rect x="1244" y="488" width="276" height="52" rx="10" fill="#f7f9fe"/>
+            </g>
+            <g fill="#aab4c9">
+              <circle cx="1272" cy="322" r="8"/><circle cx="1272" cy="386" r="8"/>
+              <circle cx="1272" cy="450" r="8"/><circle cx="1272" cy="514" r="8"/>
+              <rect x="1292" y="316" width="130" height="11" rx="5"/>
+              <rect x="1292" y="380" width="104" height="11" rx="5"/>
+              <rect x="1292" y="444" width="146" height="11" rx="5"/>
+              <rect x="1292" y="508" width="118" height="11" rx="5"/>
+            </g>
+            <g fill="#c9d2e4">
+              <rect x="1444" y="316" width="52" height="11" rx="5"/>
+              <rect x="1444" y="380" width="52" height="11" rx="5"/>
+              <rect x="1444" y="444" width="52" height="11" rx="5"/>
+              <rect x="1444" y="508" width="52" height="11" rx="5"/>
+            </g>
+          </svg>
+          <span>查看大图 ↗</span>
+        </button>
+        <figcaption>
+          <span>统一工作台 · 资产、发布、审计集中呈现</span>
+          <span>1600 × 632</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<dialog class="showcase-dialog" id="preview">
+  <button type="button" id="close-preview">关闭预览 ×</button>
+  <p class="muted" style="margin:0;font-size:13px;line-height:1.9">此处替换为真实截图的原图。演示页用占位 SVG，因此放大后仍是同一张示意。</p>
+</dialog>
+
+<section class="section section--white" id="capability">
+  <div class="shell">
+    <div class="section-header">
+      <p class="section-eyebrow">核心能力</p>
+      <h2>把散在脚本里的操作<br>收进一条可审计的路径</h2>
+      <p>同一套权限模型贯穿资产、发布与运维，每一步都可回溯到人和时间。</p>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="card-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/></svg>
+        </div>
+        <h3>统一资产视图</h3>
+        <p>服务器与 K8s 集群纳入同一清单，标签、负责人、凭据集中维护，不再靠电子表格对齐。</p>
+      </article>
+      <article class="card">
+        <div class="card-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h6l2-6 2 12 2-6h4"/></svg>
+        </div>
+        <h3>自动化发布</h3>
+        <p>Playbook 与流水线复用同一份目标清单，发布耗时从 40 分钟降到 3 分钟，失败自动回滚。</p>
+      </article>
+      <article class="card">
+        <div class="card-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/></svg>
+        </div>
+        <h3>权限与审计</h3>
+        <p>按角色授权，谁改过生产环境一屏看清；所有操作留痕，满足内控与等保要求。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="shell">
+    <div class="cta-inner">
+      <p class="eyebrow">开始使用</p>
+      <h2>创建你的 Deploy 账号</h2>
+      <p>自建部署，数据不出内网。五分钟接入第一台服务器。</p>
+      <div class="hero-actions">
+        <a class="site-button site-button--primary" href="#">注册账号 →</a>
+        <a class="site-button" href="#">前往下载中心</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#"><span class="brand-mark">D</span>Deploy</a>
+        <p>企业一体化 DevOps 运维平台。统一服务器与 Kubernetes、自动化发布、远程运维与安全审计。</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <strong>产品</strong>
+          <a href="#">能力总览</a>
+          <a href="#">架构说明</a>
+          <a href="#">安全与合规</a>
+        </div>
+        <div>
+          <strong>资源</strong>
+          <a href="#">产品文档</a>
+          <a href="#">下载中心</a>
+          <a href="#">更新日志</a>
+        </div>
+        <div>
+          <strong>公司</strong>
+          <a href="#">关于我们</a>
+          <a href="#">联系方式</a>
+          <a href="#">企业咨询</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Deploy · 本页为视觉基准模板，内容仅作演示</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var header = document.querySelector('.site-header');
+  var last = 0;
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    var h = header.offsetHeight;
+    header.dataset.hidden = (y > last && y > h) ? 'true' : 'false';
+    last = y;
+  }, { passive: true });
+
+  var dlg = document.getElementById('preview');
+  document.getElementById('open-preview').addEventListener('click', function () {
+    if (dlg.showModal) dlg.showModal();
+  });
+  document.getElementById('close-preview').addEventListener('click', function () {
+    dlg.close();
+  });
+})();
+</script>
+</body>
+</html>

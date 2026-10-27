@@ -1,0 +1,250 @@
+/* ============================================================
+   tokens.css — 企业级前端视觉语言
+   来源：yjops.com.cn (Deploy 运维平台) 构建产物实测，2026-10-27
+   框架无关：直接 <link rel="stylesheet" href="tokens.css"> 即可。
+   主色已按 WCAG AA 修正（#6579ee -> #5063d6）。
+   ============================================================ */
+
+:root {
+  /* ---- 颜色 ---- */
+  --primary: #5063d6;
+  --primary-hover: #4054bd;
+  --primary-plain: #6579ee;      /* 仅用于大字、图标、边框、焦点环 */
+  --soft: #edf1ff;
+  --ink: #273451;
+  --muted: #5a6880;
+  --paper: #f5f7fc;
+  --line: #e6eaf3;
+  --white: #fff;
+  --accent-blue: #559af0;
+
+  /* ---- 阴影 ---- */
+  --shadow-card: 0 16px 48px rgba(52, 75, 128, .063);
+  --shadow-raised: 0 24px 70px rgba(83, 107, 179, .11),
+                   0 3px 12px rgba(83, 107, 179, .04);
+  --shadow-btn: 0 5px 14px rgba(101, 121, 238, .145);
+  --shadow-btn-hover: 0 7px 18px rgba(101, 121, 238, .196);
+
+  /* ---- 圆角 ---- */
+  --r-sm: 8px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 18px;
+  --r-pill: 24px;
+
+  /* ---- 动效 ---- */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --dur-color: .18s;
+  --dur-move: .24s;
+  --dur-panel: .32s;
+
+  /* ---- 布局 ---- */
+  --shell: min(1280px, calc(100% - 64px));
+  --header-h: 76px;
+
+  /* ---- 字体 ---- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  color-scheme: light;
+}
+
+/* ============================================================
+   基础
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--primary-plain);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* ============================================================
+   原子类
+   ============================================================ */
+
+/* 容器：桌面 1280 上限，左右 32 留白 */
+.shell {
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+/* 小标签（eyebrow）：正字距 + 药丸底 */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  padding: 7px 12px;
+  border: 1px solid #dfe7ff;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, .7);
+  color: #5e72b4;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .02em;
+}
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* 按钮 */
+.site-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 48px;
+  padding: 10px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  background: var(--white);
+  border-color: var(--line);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-color), box-shadow var(--dur-color),
+              border-color var(--dur-color), color var(--dur-color);
+}
+.site-button:hover { border-color: #cfd8ec; }
+
+.site-button--primary {
+  border-color: transparent;
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: var(--shadow-btn);
+}
+.site-button--primary:hover {
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+.site-button--small { min-height: 42px; padding: 8px 18px; }
+
+/* 文字链接按钮 */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: #596da2;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color var(--dur-color);
+}
+.text-link:hover { color: var(--primary); }
+
+/* 卡片 */
+.card {
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+
+/* 区块标题：三段底部对齐网格 */
+.section-header {
+  display: grid;
+  grid-template-columns: .6fr 1.2fr 1fr;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 36px;
+}
+.section-header h2 {
+  margin: 12px 0 0;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.5;
+  letter-spacing: -.025em;
+  font-weight: 700;
+}
+.section-header > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+.section-header .eyebrow {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: #7f91d2;
+  font-size: 12px;
+  letter-spacing: .1em;
+}
+.section-header .eyebrow::before { display: none; }
+
+/* 正文辅助 */
+.lead {
+  max-width: 660px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.95;
+}
+.muted { color: var(--muted); }
+.code-inline {
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--white);
+  font-family: var(--font-mono);
+  font-size: .9em;
+}
+
+/* ============================================================
+   响应式
+   ============================================================ */
+
+@media (max-width: 1080px) {
+  :root { --shell: calc(100% - 40px); }
+}
+
+@media (max-width: 760px) {
+  :root { --shell: calc(100% - 32px); --header-h: 68px; }
+  .section-header { grid-template-columns: 1fr; gap: 12px; margin-bottom: 28px; }
+  .lead { font-size: 15px; line-height: 1.9; }
+}
+
+@media (max-width: 540px) {
+  .site-button { width: 100%; }
+}
+
+/* ============================================================
+   动效降级
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
