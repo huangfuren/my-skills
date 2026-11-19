@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  分区全景骨架 · 1960 宽（模式 B：读者会点开看大图）
+  用途：任一领域的对象全景，双栏分区 + 区块容器 + 三行卡片
+  示例按「系统 / 服务」语境填充；换成机房就填 IP，换成组织就填部门，
+  换成项目就填交付物——结构与配色不变，只换文字。
+  替换方法：所有【】为占位符；左右分区结构与区块 y 坐标必须一致，卡片内容可不同
+  坐标基准：分区 x=20 / 1020，区块 x=分区.x+20，卡片 x=区块.x+15，pitch=289
+  分区副标题：x = 标题.x + 标题估算宽 + 12。本骨架按 4 字标题算得 x=155，标题变长要同步后移。
+  emoji 在 cairosvg 下渲染为方块，属预期；浏览器正常显示，验收以浏览器为准。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 930"
+     font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+
+  <rect x="0" y="0" width="1960" height="930" fill="#ffffff"/>
+
+  <defs>
+    <!-- 线宽 2 的主箭头（10×10） -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+    <!-- 线宽 3 的双向互联（12×12） -->
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+    <!-- 橙色失败路径（10×10） -->
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e65100"/>
+    </marker>
+    <!-- 细线（线宽 ≤1.5）用的小箭头（7×7） -->
+    <marker id="arrowSm" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+  </defs>
+
+  <!-- ========== 标题区 ========== -->
+  <text x="30" y="44" font-size="20" font-weight="bold" fill="#1b5e20">【全景标题】· 【视角】</text>
+  <text x="30" y="68" font-size="12" fill="#616161">数据来源：【来源表 / 文档】，并经【复核人】于【YYYY-MM-DD】复核</text>
+
+  <!-- ========== 外部实体（胶囊，居中） ========== -->
+  <rect x="830" y="95" width="300" height="54" rx="27"
+        fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="980" y="128" font-size="17" font-weight="bold" fill="#37474f"
+        text-anchor="middle">🌐 【外部实体 / 互联网】</text>
+
+  <!-- 分叉箭头：外部 → 两个分区 -->
+  <line x1="900" y1="149" x2="480" y2="172" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="1060" y1="149" x2="1480" y2="172" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== 左分区 ========== -->
+  <rect x="20" y="175" width="920" height="530" rx="12"
+        fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="40" y="205" font-size="17" font-weight="bold" fill="#1b5e20">🏢 【分区A】</text>
+  <text x="155" y="205" font-size="11.5" fill="#4e6b50">【范围 · 规模】</text>
+
+  <!-- 左 · 区块 1：外部接入 -->
+  <rect x="40" y="220" width="880" height="140" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="56" y="245" font-size="14" font-weight="bold" fill="#0d47a1">🌍 【区块名：用户侧 / 接入】</text>
+  <rect x="55" y="263" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="191" y="293" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">Web 客户端</text>
+  <text x="191" y="314" font-size="11.5" fill="#37474f" text-anchor="middle">【主入口 · 日活 12 万】</text>
+  <text x="191" y="332" font-size="11.5" fill="#37474f" text-anchor="middle">【浏览器 · 正常】</text>
+  <rect x="344" y="263" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="480" y="293" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">移动端 App</text>
+  <text x="480" y="314" font-size="11.5" fill="#37474f" text-anchor="middle">【第二入口 · 占 38%】</text>
+  <text x="480" y="332" font-size="11.5" fill="#37474f" text-anchor="middle">【iOS + Android · 正常】</text>
+  <rect x="633" y="263" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="769" y="293" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">开放 API</text>
+  <text x="769" y="314" font-size="11.5" fill="#37474f" text-anchor="middle">【对外接口 · 20 家合作方】</text>
+  <text x="769" y="332" font-size="11.5" fill="#c62828" text-anchor="middle">【限流阈值待确认】</text>
+
+  <!-- 左 · 区块 2：核心服务 -->
+  <rect x="40" y="380" width="880" height="140" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="56" y="405" font-size="14" font-weight="bold" fill="#1b5e20">🖥️ 【区块名：核心服务】</text>
+  <rect x="55" y="423" width="272" height="82" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="191" y="453" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">订单服务</text>
+  <text x="191" y="474" font-size="11.5" fill="#37474f" text-anchor="middle">【核心域 · 8 实例】</text>
+  <text x="191" y="492" font-size="11.5" fill="#2e5230" text-anchor="middle">【QPS 峰值 1200】</text>
+  <rect x="344" y="423" width="272" height="82" rx="6" fill="#a5d6a7" stroke="#1b5e20" stroke-width="2"/>
+  <text x="480" y="453" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">支付服务</text>
+  <text x="480" y="474" font-size="11.5" fill="#37474f" text-anchor="middle">【主力链路 · 双活】</text>
+  <text x="480" y="492" font-size="11.5" fill="#2e5230" text-anchor="middle">【资金强一致】</text>
+  <rect x="633" y="423" width="272" height="82" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="769" y="453" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">★ 调度中心</text>
+  <text x="769" y="474" font-size="11.5" fill="#7f3f00" text-anchor="middle">【全局唯一调度】</text>
+  <text x="769" y="492" font-size="11.5" fill="#7f3f00" text-anchor="middle">【串行瓶颈点】</text>
+
+  <!-- 左 · 区块 3：管理与预留 -->
+  <rect x="40" y="540" width="880" height="140" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="56" y="565" font-size="14" font-weight="bold" fill="#8d6e00">🧱 【区块名：辅助与预留】</text>
+  <rect x="55" y="583" width="272" height="82" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="191" y="613" font-size="15" font-weight="bold" fill="#5d4700" text-anchor="middle">消息队列</text>
+  <text x="191" y="634" font-size="11.5" fill="#5d4700" text-anchor="middle">【异步解耦 · 旁路】</text>
+  <text x="191" y="652" font-size="11.5" fill="#5d4700" text-anchor="middle">【非关键路径】</text>
+  <rect x="344" y="583" width="272" height="82" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="480" y="613" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">批处理任务</text>
+  <text x="480" y="634" font-size="11.5" fill="#311b92" text-anchor="middle">【离线 · 特殊类型】</text>
+  <text x="480" y="652" font-size="11.5" fill="#311b92" text-anchor="middle">【每日 02:00 触发】</text>
+  <rect x="633" y="583" width="272" height="82" rx="4" fill="#f5f5f5" stroke="#bdbdbd"
+        stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="769" y="613" font-size="15" font-weight="bold" fill="#616161" text-anchor="middle">【空置 / 预留】</text>
+  <text x="769" y="634" font-size="11.5" fill="#757575" text-anchor="middle">【说明：为何空置】</text>
+  <text x="769" y="652" font-size="11.5" fill="#757575" text-anchor="middle">【启用条件】</text>
+
+  <!-- ========== 右分区（左分区 x 偏移 +1000） ========== -->
+  <rect x="1020" y="175" width="920" height="530" rx="12"
+        fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1040" y="205" font-size="17" font-weight="bold" fill="#1b5e20">🏢 【分区B】</text>
+  <text x="1155" y="205" font-size="11.5" fill="#4e6b50">【范围 · 规模】</text>
+
+  <rect x="1040" y="220" width="880" height="140" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="1056" y="245" font-size="14" font-weight="bold" fill="#0d47a1">🌍 【区块名：用户侧 / 接入】</text>
+  <rect x="1055" y="263" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1191" y="293" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">运营后台</text>
+  <text x="1191" y="314" font-size="11.5" fill="#37474f" text-anchor="middle">【内部入口 · 员工用】</text>
+  <text x="1191" y="332" font-size="11.5" fill="#37474f" text-anchor="middle">【内网限定 · 正常】</text>
+  <rect x="1344" y="263" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1480" y="293" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">数据看板</text>
+  <text x="1480" y="314" font-size="11.5" fill="#37474f" text-anchor="middle">【只读 · 报表】</text>
+  <text x="1480" y="332" font-size="11.5" fill="#37474f" text-anchor="middle">【每日刷新 · 正常】</text>
+  <rect x="1633" y="263" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1769" y="293" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">合作方门户</text>
+  <text x="1769" y="314" font-size="11.5" fill="#37474f" text-anchor="middle">【外部账号登录】</text>
+  <text x="1769" y="332" font-size="11.5" fill="#37474f" text-anchor="middle">【OAuth 回调 · 正常】</text>
+
+  <rect x="1040" y="380" width="880" height="140" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="1056" y="405" font-size="14" font-weight="bold" fill="#1b5e20">🖥️ 【区块名：核心服务】</text>
+  <rect x="1055" y="423" width="272" height="82" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1191" y="453" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">订单服务</text>
+  <text x="1191" y="474" font-size="11.5" fill="#37474f" text-anchor="middle">【核心域 · 6 实例】</text>
+  <text x="1191" y="492" font-size="11.5" fill="#2e5230" text-anchor="middle">【QPS 峰值 800】</text>
+  <rect x="1344" y="423" width="272" height="82" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1480" y="453" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">退款服务</text>
+  <text x="1480" y="474" font-size="11.5" fill="#37474f" text-anchor="middle">【备用链路】</text>
+  <text x="1480" y="492" font-size="11.5" fill="#2e5230" text-anchor="middle">【主链路超时 3s】</text>
+  <rect x="1633" y="423" width="272" height="82" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="1769" y="453" font-size="15" font-weight="bold" fill="#546e7a" text-anchor="middle">旧版结算</text>
+  <text x="1769" y="474" font-size="11.5" fill="#546e7a" text-anchor="middle">【已下线 · 待清理】</text>
+  <text x="1769" y="492" font-size="11.5" fill="#546e7a" text-anchor="middle">【2026-09 停用】</text>
+
+  <rect x="1040" y="540" width="880" height="140" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="1056" y="565" font-size="14" font-weight="bold" fill="#8d6e00">🧱 【区块名：辅助与预留】</text>
+  <rect x="1055" y="583" width="272" height="82" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="1191" y="613" font-size="15" font-weight="bold" fill="#5d4700" text-anchor="middle">日志归档</text>
+  <text x="1191" y="634" font-size="11.5" fill="#5d4700" text-anchor="middle">【合规留存 · 旁路】</text>
+  <text x="1191" y="652" font-size="11.5" fill="#5d4700" text-anchor="middle">【非关键路径】</text>
+  <rect x="1344" y="583" width="272" height="82" rx="4" fill="#f5f5f5" stroke="#bdbdbd"
+        stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="1480" y="613" font-size="15" font-weight="bold" fill="#616161" text-anchor="middle">【空置 / 预留】</text>
+  <text x="1480" y="634" font-size="11.5" fill="#757575" text-anchor="middle">【说明：为何空置】</text>
+  <text x="1480" y="652" font-size="11.5" fill="#757575" text-anchor="middle">【启用条件】</text>
+  <rect x="1633" y="583" width="272" height="82" rx="4" fill="#f5f5f5" stroke="#bdbdbd"
+        stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="1769" y="613" font-size="15" font-weight="bold" fill="#616161" text-anchor="middle">【空置 / 预留】</text>
+  <text x="1769" y="634" font-size="11.5" fill="#757575" text-anchor="middle">【说明：为何空置】</text>
+  <text x="1769" y="652" font-size="11.5" fill="#757575" text-anchor="middle">【启用条件】</text>
+
+  <!-- ========== 中部：分区互联（间隙 80，可放短标注） ========== -->
+  <line x1="944" y1="450" x2="1016" y2="450" stroke="#1565c0" stroke-width="3"
+        marker-start="url(#arrowBlue)" marker-end="url(#arrowBlue)"/>
+  <text x="980" y="440" font-size="10" fill="#1565c0" text-anchor="middle">【互联】</text>
+  <text x="980" y="470" font-size="10" fill="#1565c0" text-anchor="middle">【已确认】</text>
+
+  <!-- ========== 警示 / 结论块 ========== -->
+  <rect x="20" y="730" width="1920" height="85" rx="6" fill="#fff3e0" stroke="#e65100"
+        stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="40" y="758" font-size="15" font-weight="bold" fill="#bf360c">⚠️ 【警示 / 核心结论标题】</text>
+  <text x="40" y="782" font-size="12.5" fill="#5d4037">· 【要点一：说清是什么问题，涉及哪个节点】</text>
+  <text x="40" y="803" font-size="12.5" fill="#5d4037">· 【要点二：影响面，以及为什么必须写进图里】</text>
+  <text x="1060" y="782" font-size="12.5" fill="#5d4037">· 【要点三：留给读者的动作或确认项】</text>
+  <text x="1060" y="803" font-size="12.5" fill="#5d4037">· 【要点四：可选】</text>
+
+  <!-- ========== 图例（通栏，两行四列） ========== -->
+  <rect x="20" y="840" width="1920" height="70" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+
+  <rect x="40" y="855" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="72" y="866" font-size="12" fill="#37474f">主体 / 核心组件</text>
+  <rect x="520" y="855" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1"/>
+  <text x="552" y="866" font-size="12" fill="#37474f">主体 · 强调 / 主力</text>
+  <rect x="1000" y="855" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="1032" y="866" font-size="12" fill="#37474f">外部 / 输入侧</text>
+  <rect x="1480" y="855" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="1512" y="866" font-size="12" fill="#37474f">枢纽 / 关键节点（全图 ≤2）</text>
+
+  <rect x="40" y="881" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="72" y="892" font-size="12" fill="#37474f">次要 / 辅助</text>
+  <rect x="520" y="881" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="552" y="892" font-size="12" fill="#37474f">扩展 / 特殊类型</text>
+  <rect x="1000" y="881" width="22" height="14" rx="3" fill="#f5f5f5" stroke="#bdbdbd"
+        stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="1032" y="892" font-size="12" fill="#37474f">空缺 / 未实现</text>
+  <rect x="1480" y="881" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+  <text x="1512" y="892" font-size="12" fill="#37474f">已下线 / 未选备选</text>
+
+</svg>
