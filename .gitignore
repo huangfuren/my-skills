@@ -1,0 +1,6 @@
+# Python 运行产物
+__pycache__/
+*.pyc
+
+# png-to-svg 渲染输出（临时，用完即弃）
+png-to-svg/render/
