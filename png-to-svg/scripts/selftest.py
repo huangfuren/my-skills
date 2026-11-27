@@ -157,11 +157,68 @@ def check_align():
     return ok
 
 
+def check_components():
+    """两个分离方块 + 一条细线 + 一对斜对角像素 → 必须切出 4 块。
+
+    斜对角那两点是本项的关键：8 邻接下是 1 块，4 邻接下必须是 2 块。
+    汉字笔画全靠斜对角相连，这一条错了会把每个字拆成七八块碎片。
+    """
+    w, h = 60, 40
+    buf = bytearray(w * h)
+
+    def rect(x0, y0, x1, y1):
+        for y in range(y0, y1 + 1):
+            for x in range(x0, x1 + 1):
+                buf[y * w + x] = 1
+
+    rect(2, 2, 10, 10)      # 81
+    rect(20, 2, 30, 10)     # 99
+    for x in range(5, 50):
+        buf[20 * w + x] = 1  # 45 细长线
+    buf[30 * w + 40] = 1
+    buf[31 * w + 41] = 1    # 斜对角两点
+
+    bb = bytes(buf)
+    c8 = pngx.bits_components(bb, w, h)
+    c4 = pngx.bits_components(bb, w, h, diag=False)
+    big = pngx.bits_components(bb, w, h, min_area=90)
+    ok = (len(c8) == 4 and len(c4) == 5 and len(big) == 1
+          and c8[0][4] == 99 and big[0][4] == 99)
+    print("%s bits_components → 8邻接 %d 块 / 4邻接 %d 块 / min_area=90 %d 块"
+          "（期望 4 / 5 / 1）" % ("PASS" if ok else "FAIL", len(c8), len(c4), len(big)))
+    return ok
+
+
+def check_inventory():
+    """原图两个块、重绘只有一个 → 必须判出 1 处「缺」，另 1 处「存」。"""
+    import inventory
+    w, h = 80, 40
+
+    def canvas(blocks):
+        img = bytearray(b"\xff" * (w * h * 3))
+        for x0, y0, x1, y1 in blocks:
+            for y in range(y0, y1 + 1):
+                for x in range(x0, x1 + 1):
+                    i = (y * w + x) * 3
+                    img[i:i + 3] = b"\x00\x00\x00"
+        return img
+
+    src = canvas([(10, 10, 30, 30), (50, 10, 70, 30)])
+    dst = canvas([(10, 10, 30, 30)])
+    rows = inventory._audit(src, dst, (0, 0, 0), w, h, 45, 40, 0.35)
+    verdicts = sorted(r[4] for r in rows)
+    ok = verdicts == ["存", "缺"]
+    print("%s inventory 清点 → %s（期望 [存, 缺]）"
+          % ("PASS" if ok else "FAIL", verdicts))
+    return ok
+
+
 if __name__ == "__main__":
     results = [
         check_fit_circle(), check_png_roundtrip(), check_runs(),
         check_ink_bits(), check_color_bits(), check_ellipse_axes(),
         check_text_metrics(), check_align(),
+        check_components(), check_inventory(),
     ]
     print("\n%d/%d 通过" % (sum(results), len(results)))
     raise SystemExit(0 if all(results) else 1)

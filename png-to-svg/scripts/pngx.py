@@ -20,7 +20,7 @@ __all__ = [
     "read_png", "write_png", "crop_scale", "fit_circle",
     "near", "color_stats", "row_runs", "col_runs", "bbox", "outline_points",
     "ink_bits", "color_bits", "bits_bytes", "bits_count", "bits_bbox",
-    "bits_row_runs", "crop_bits", "ellipse_axes", "text_metrics",
+    "bits_row_runs", "bits_components", "crop_bits", "ellipse_axes", "text_metrics",
 ]
 
 
@@ -446,6 +446,89 @@ def bits_row_runs(bb, w, y, x0=0, x1=None):
     return runs
 
 
+def bits_components(bb, w, h, min_area=1, diag=True):
+    """把掩膜拆成独立连通块，返回 [(minx, maxx, miny, maxy, area)]，按面积降序。
+
+    这是"图里到底有哪些部件"的唯一可靠答案。`bits_bbox` 只给整层外接框，
+    `bits_row_runs` 只给一行的段；要问"这一色有几个独立元素、各自在哪"，用这个。
+
+    实现是**逐行 runs + 并查集**，不逐像素 BFS：
+    每行用 bytes.find 取连续段（C 层），上下两行的段重叠就 union。
+    75 万像素、2000 个色段量级，实测 40ms 上下。
+
+    diag=True 按 8 邻接算连通（斜对角也算），汉字笔画全靠斜对角相连，
+    关掉会把一个字拆成七八块碎片。
+
+    min_area 用来滤掉抗锯齿碎点与孤立毛刺。**注意它按像素数算，不按 bbox 面积**，
+    所以一条细长线（3px×200px=600）不会被误滤，而一个 20×20 的抗锯齿噪点会被滤掉。
+    """
+    parent = []
+    boxes = []
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    def union(i, j):
+        ri, rj = find(i), find(j)
+        if ri == rj:
+            return
+        parent[rj] = ri
+        b, c = boxes[ri], boxes[rj]
+        if c[0] < b[0]:
+            b[0] = c[0]
+        if c[1] > b[1]:
+            b[1] = c[1]
+        if c[2] < b[2]:
+            b[2] = c[2]
+        if c[3] > b[3]:
+            b[3] = c[3]
+        b[4] += c[4]
+
+    pad = 1 if diag else 0
+    prev = []
+    for y in range(h):
+        row = bb[y * w:(y + 1) * w]
+        cur = []
+        pos = 0
+        while True:
+            i = row.find(1, pos)
+            if i < 0:
+                break
+            j = row.find(0, i)
+            if j < 0:
+                j = len(row)
+            idx = len(parent)
+            parent.append(idx)
+            boxes.append([i, j - 1, y, y, j - i])
+            cur.append((idx, i, j - 1))
+            pos = j
+        p = 0
+        for idx, a, b in cur:
+            while p < len(prev) and prev[p][2] + pad < a:
+                p += 1
+            q = p
+            while q < len(prev) and prev[q][1] <= b + pad:
+                union(prev[q][0], idx)
+                q += 1
+        prev = cur
+
+    out = []
+    seen = set()
+    for i in range(len(parent)):
+        r = find(i)
+        if r in seen:
+            continue
+        seen.add(r)
+        bx = boxes[r]
+        if bx[4] >= min_area:
+            out.append((bx[0], bx[1], bx[2], bx[3], bx[4]))
+    out.sort(key=lambda t: -t[4])
+    return out
+
+
 def ellipse_axes(bb, w, x0, x1, y0, y1, min_span=8):
     """取椭圆/圆的两轴与圆心，返回 (cx, cy, rx, ry, is_ellipse)。
 
@@ -533,8 +616,9 @@ def text_metrics(bb, w, x0, x1, y0, y1, text="", cjk_ratio=0.866, min_span=4):
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help"):
         print("用法: python pngx.py <图片.png> [TopN 颜色]")
+        print("作为库使用时 import pngx，主要接口见 __all__ 与各函数 docstring。")
         raise SystemExit(0)
     w, h, px = read_png(sys.argv[1])
     print("尺寸 %d x %d" % (w, h))
